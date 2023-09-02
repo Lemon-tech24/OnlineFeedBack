@@ -11,7 +11,7 @@ function App() {
   const [status, setStatus] = useState(false)
 
   useEffect(() => {
-    const getUser = async () => {
+    const getUser = () => {
       fetch("http://localhost:5000/auth/login/success", {
         method: "GET",
         credentials: "include",
@@ -46,7 +46,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/home" element={<Home user={user} email={email} id={id} status={status} />} />
+        <Route path="/home" element={user ? <Home user={user} email={email} id={id} status={status} />: <Navigate to="/login"/>} />
         <Route path="/login" element={user ? <Navigate to="/home" /> : <Login />}/>
       </Routes>
     </BrowserRouter>

@@ -8,8 +8,6 @@ const GoogleLogin = ()=>{
 function Login() {
   return (
     <div className="Login">
-
-      
         <button onClick={GoogleLogin}>Login with RTU account</button>
     </div>
   )

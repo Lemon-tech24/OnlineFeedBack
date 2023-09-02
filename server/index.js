@@ -7,9 +7,7 @@ const cors = require('cors')
 const app = express()
 require('./passport')
 
-app.use(
-    cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 1000})
-  );
+app.use(cookieSession({ name: "session", keys: ["key"], maxAge: 24 * 60 * 60 * 1000}));
 
 app.use(passport.initialize())
 app.use(passport.session())

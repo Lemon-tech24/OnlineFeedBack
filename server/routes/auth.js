@@ -1,7 +1,12 @@
 const router = require('express').Router()
 const passport = require('passport')
 
-router.get('/login/failed',(req,res)=>{
+router.get('auth/login/failed',(req,res)=>{
+    res.status(500).json({
+        success: false,
+        message: "denied",
+    })
+
     res.redirect('/login')
 })
 
@@ -23,7 +28,7 @@ router.get('/login/success', (req,res)=>{
 
 router.get('/logout', (req, res)=>{
     req.logout();
-    res.redirect('/login/failed')
+    res.redirect('http://localhost:5173/login')
 })
 
 router.get('/google', passport.authenticate('google', {scope: ['openid','profile', 'email']}))
