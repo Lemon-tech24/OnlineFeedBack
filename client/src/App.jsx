@@ -10,38 +10,41 @@ function App() {
   const [id, setId] = useState(null)
   const [status, setStatus] = useState(false)
 
-  useEffect(() => {
-    const getUser = () => {
-      fetch("http://localhost:5000/auth/login/success", {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Credentials": true,
-        },
-      })
-        .then((response) => {
-          if (response.status === 200) return response.json()
-          throw new Error('Unauthorized')
-        })
-        .then((resObject) => {
-          if (resObject) {
-            setUser(resObject.user)
-            setEmail(resObject.email)
-            setId(resObject.id)
-            setStatus(resObject.success)
-          } else {
-            throw new Error('Response object is missing expected properties')
-          }
-        })
-        .catch((err) => {
-          console.error(err)
-        })
-    }
 
-    getUser()
-  }, [])
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/auth/login/success", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": true,
+          },
+        });
+        if (response.status === 200) {
+          const resObject = await response.json();
+  
+          if (resObject) {
+            setUser(resObject.user);
+            setEmail(resObject.email);
+            setId(resObject.id);
+            setStatus(resObject.success);
+          } else {
+            throw new Error('Response object is missing expected properties');
+          }
+        } else {
+          throw new Error('Unauthorized');
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+  
+    getUser();
+  }, []);
+  
 
   return (
     <BrowserRouter>
