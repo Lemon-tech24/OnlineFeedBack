@@ -1,25 +1,15 @@
-import React, {useEffect} from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import React from 'react';
+import HomeWrapper from './HomeWrapper';
+import { Navigate } from 'react-router-dom';
 
-function Home(props) {
-  const navigate = useNavigate();
+function Home({ id, user, email, status }) {
 
-  const logout = () => {
-      window.open("http://localhost:5000/auth/logout", "_self");
-  };
-  
+
   return (
     <div className='Home'>
 
-      {props.status ? (
-
-       <div className="home-wrapper">
-          This is home
-          {props.id}
-          {props.user}
-          {props.email}
-          <button onClick={logout}>Logout</button>
-        </div>
+      {status ? (
+        <HomeWrapper id={id} user={user} email={email} />
       ) : (
         <Navigate to="/login" />
       )}

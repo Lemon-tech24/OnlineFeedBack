@@ -1,0 +1,43 @@
+// Define your generator and datasource
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// Define your models
+model User {
+  id       String     @id @map("_id")
+  name     String
+  email    String     @unique
+  posts    Post[]
+  PostLike PostLike[]
+}
+
+model Post {
+  id        String     @id @map("_id") // Define your primary key
+  user      User       @relation(fields: [userId], references: [id])
+  userId    String
+  likes     PostLike[] // Define the relation to "PostLike" documents
+  anonymous Boolean
+  comments  Comment[] // Corrected the model name
+}
+
+model PostLike {
+  id     String @id @map("_id") // Define your primary key for PostLike
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+  post   Post   @relation(fields: [postId], references: [id])
+  postId String
+}
+
+model Comment {
+  id      String  @id @map("_id")
+  content String
+  post    Post?   @relation(fields: [postId], references: [id])
+  postId  String?
+}
