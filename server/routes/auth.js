@@ -45,13 +45,8 @@ router.get('/login/success', async (req, res) => {
 
     }
 })
-const delayMiddleware = (req, res, next) => {
-    setTimeout(() => {
-        next();
-    }, 1000);
-};
 
-router.get('/logout', delayMiddleware, (req, res) => {
+router.get('/logout', (req, res) => {
     req.logout();
     res.redirect('http://localhost:5173/login')
 })
@@ -60,9 +55,7 @@ router.get('/google', passport.authenticate('google', { scope: ['openid', 'profi
 
 
 
-
-
-router.get('/google/callback', delayMiddleware, passport.authenticate("google", {
+router.get('/google/callback', passport.authenticate("google", {
     successRedirect: "http://localhost:5173/home",
     failureRedirect: "/login/failed"
 }))

@@ -11,7 +11,7 @@ function Home({ id, user, email, status }) {
       {status ? (
         <HomeWrapper id={id} user={user} email={email} />
       ) : (
-        <Navigate to="/login" />
+        <div>Loading</div>
       )}
     </div>
   );

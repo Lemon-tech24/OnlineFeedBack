@@ -10,51 +10,47 @@ function App() {
   const [email, setEmail] = useState(null)
   const [id, setId] = useState(null)
   const [status, setStatus] = useState(false)
-  const [loading, setLoading] = useState(false)
 
 
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/auth/login/success", {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Credentials": true,
-          },
-        });
-        if (response.status === 200) {
-          setLoading(true)
-          const resObject = await response.json();
+  const getUser = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/auth/login/success", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+      });
+      if (response.status === 200) {
+        const resObject = await response.json();
 
-          if (resObject) {
-            setUser(resObject.user);
-            setEmail(resObject.email);
-            setId(resObject.id);
-            setStatus(resObject.success);
+        if (resObject) {
+          setUser(resObject.user);
+          setEmail(resObject.email);
+          setId(resObject.id);
+          setStatus(resObject.success);
 
-          } else {
-            throw new Error('Response object is missing expected properties');
-          }
         } else {
-          throw new Error('Unauthorized');
+          throw new Error('Response object is missing expected properties');
         }
-      } catch (err) {
-        console.error(err);
+      } else {
+        throw new Error('Unauthorized');
       }
-    };
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-    getUser();
-  }, []);
+  getUser()
 
 
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/home" element={user && status ? <Home user={user} email={email} id={id} status={status} /> : <Navigate to="/login" />} />
+          <Route path="/home" element={status ? <Home user={user} email={email} id={id} status={status} /> : <Navigate to="/login" />} />
           <Route path="/login" element={user ? <Navigate to="/home" /> : <Login />} />
         </Routes>
       </BrowserRouter>

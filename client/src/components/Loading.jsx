@@ -1,16 +1,12 @@
 import React from 'react'
+import { Navigate } from 'react-router-dom'
 
-function Loading({ success, setLoading }) {
+function Loading({ status }) {
 
-    const delay = () => {
-        setTimeout(() => {
-            setLoading(false)
-        }, 1000)
-    }
     return (
         <div className="loading">
             LOADING.....
-            {delay()}
+            {status ? <Navigate to="/home" /> : <Navigate to="/login" />}
         </div>
     )
 }
