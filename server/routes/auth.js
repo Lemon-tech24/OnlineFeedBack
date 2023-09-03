@@ -5,6 +5,8 @@ const prisma = new PrismaClient({ log: ['query', 'info', 'error'] })
 
 
 
+
+
 router.get('/login/success', async (req, res) => {
 
     if (req.isAuthenticated() && req.user) {
@@ -46,12 +48,20 @@ router.get('/login/success', async (req, res) => {
     }
 })
 
+
 router.get('/logout', (req, res) => {
     req.logout();
     res.redirect('http://localhost:5173/login')
 })
 
+
+router.get('/login/failed', (req, res) => {
+    res.json({ message: 'Login Failed Please Try Again' })
+})
+
 router.get('/google', passport.authenticate('google', { scope: ['openid', 'profile', 'email'] }))
+
+
 
 
 
