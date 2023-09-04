@@ -4,9 +4,7 @@ import { BiLogoGmail } from 'react-icons/bi'
 
 function Login() {
 
-  useEffect(() => {
 
-  })
   const GoogleLogin = () => {
     window.open('http://localhost:5000/auth/google', "_self")
   }

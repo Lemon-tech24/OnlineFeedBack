@@ -14,7 +14,7 @@ app.use(cors({
     credentials: true,
 }))
 
-app.use(cookieSession({ name: "session", keys: ["key"], maxAge: 24 * 60 * 60 * 1000 }));
+app.use(cookieSession({ name: "session", keys: ["key"], maxAge: 24 * 60 * 60 * 100 }));
 
 app.use(passport.initialize())
 app.use(passport.session())

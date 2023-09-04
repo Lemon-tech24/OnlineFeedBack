@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { getUser } from './getData/GetUser'
+import { logout } from './fetch/Logout'
+import Post from './Post';
 
 function Home() {
 
@@ -6,51 +9,82 @@ function Home() {
   const [email, setEmail] = useState(null)
   const [id, setId] = useState(null)
   const [status, setStatus] = useState(null)
+  const [given, setGiven] = useState(null)
+  const [family, setFamily] = useState(null)
+  const [isOpen, setOpen] = useState(false)
+  const [addfeed, setAddFeed] = useState(false)
 
 
   useEffect(() => {
-    const getUser = async () => {
+    const fetchUser = async () => {
       try {
-        const response = await fetch("http://localhost:5000/auth/login/success", {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Credentials": true,
-          },
-        });
-        if (response.status === 200) {
-          const resObject = await response.json();
-
-          if (resObject) {
-            setUser(resObject.user);
-            setEmail(resObject.email);
-            setId(resObject.id);
-            setStatus(resObject.success);
-
-          } else {
-            throw new Error('Response object is missing expected properties');
-          }
-        } else {
-          throw new Error('Unauthorized');
-        }
-      } catch (err) {
-        console.error(err);
+        const resObject = await getUser(); // Call the getUser function
+        setUser(resObject.user);
+        setEmail(resObject.email);
+        setId(resObject.id);
+        setStatus(resObject.success);
+        setGiven(resObject.given);
+        setFamily(resObject.family);
+      } catch (error) {
+        console.error(error);
       }
-    };
+    }
 
-    getUser();
+    fetchUser();
   }, []);
-  const logout = () => {
-    window.open("http://localhost:5000/auth/logout", "_self");
-  };
+
+
+  const handleLogout = () => {
+    setOpen(true)
+  }
+
+  const confirmLogout = () => {
+    setOpen(false)
+    logout()
+  }
+
+  const closeLogout = () => {
+    setOpen(false)
+  }
+
+  const handleAddFeedback = () => {
+
+  }
+
   return (
     <div className='Home'>
-      <div className="home-wrapper">
-        {id}
-        {user}
-        <button onClick={logout}>dasdsad</button>
+      <div className="home-nav">
+        <div className="currentUser">Hello, {given ? given : 'Loading...'}</div>
+        <button onClick={handleLogout}>Logout</button>
+      </div>
+      <div className="add-post">
+        <button>Add Feedback</button>
+      </div>
+
+      <div className="home-canvas">
+        {isOpen && (
+          <div className="logout-overlay">
+            <div className="logout-box">
+              <h2>Logout Confirmation</h2>
+              <p>Are you sure you want to logout?</p>
+              <div className="logout-btn">
+                <button onClick={confirmLogout}>Yes</button>
+                <button onClick={closeLogout}>No</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {addfeed && (
+          <div className="post-overlay">
+            <div className="post-box">
+
+              <div className="post-close">
+                <button>Cancel</button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

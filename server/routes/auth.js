@@ -36,6 +36,8 @@ router.get('/login/success', async (req, res) => {
                 user: req.user.displayName,
                 email: req.user.emails[0].value,
                 id: req.user.id,
+                given: req.user.name.givenName,
+                family: req.user.name.familyName
             })
 
         } catch (err) {
@@ -48,24 +50,26 @@ router.get('/login/success', async (req, res) => {
     }
 })
 
-
-router.get('/logout', (req, res) => {
+router.post('/logout', (req, res) => {
     req.logout();
-    res.redirect('http://localhost:5173/login')
+    res.send()
 })
 
 
-router.get('/login/failed', (req, res) => {
+router.post('/login/failed', (req, res) => {
     res.json({ message: 'Login Failed Please Try Again' })
 })
+
+const delayedMiddleware = (req, res, next) => {
+    setTimeout(() => {
+        next()
+    }, 500)
+}
 
 router.get('/google', passport.authenticate('google', { scope: ['openid', 'profile', 'email'] }))
 
 
-
-
-
-router.get('/google/callback', passport.authenticate("google", {
+router.get('/google/callback', delayedMiddleware, passport.authenticate("google", {
     successRedirect: "http://localhost:5173/home",
     failureRedirect: "/login/failed"
 }))
