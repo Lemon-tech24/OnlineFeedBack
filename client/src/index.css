@@ -6,7 +6,7 @@
     margin: 0;
     padding: 0;
     border: none;
-    outline: none;
+
 }
 
 button {
@@ -106,18 +106,29 @@ button {
     font-size: 22px;
 }
 
+@keyframes popup {
+    0% {
+        opacity: 0;
+    }
 
-.logout-overlay {
+    100% {
+        opacity: 1;
+    }
+}
+
+.logout-overlay,
+.post-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    animation: popup .75s ease-in
 }
 
 
@@ -152,7 +163,6 @@ button {
 
 .logout-btn button {
     color: white;
-    font-size: 18px;
     padding: 5px;
     border-radius: 10px;
     width: 50%;
@@ -165,4 +175,161 @@ button {
 
 .logout-btn button:nth-child(2) {
     background-color: red;
+}
+
+.post-box {
+    background-color: white;
+    width: 700px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin: 10px;
+}
+
+.post-nav {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.post-nav button {
+    color: white;
+    font-size: 15px;
+    font-weight: 800;
+    padding: 5px;
+    border-radius: 10px;
+    width: 15%;
+    background-color: red;
+}
+
+/*selection */
+.post-form button {
+    color: white;
+    font-size: 15px;
+    font-weight: 800;
+    padding: 5px;
+    border-radius: 10px;
+    width: 15%;
+    background-color: green;
+}
+
+
+.post-form div:nth-child(1) {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.post-form div:nth-child(1) label {
+    font-size: 20px;
+}
+
+.post-form div:nth-child(1) select {
+    border: solid 1px black;
+    border-radius: 8px;
+    font-size: 18px;
+    outline: none;
+}
+
+
+.post-inputs {
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.post-inputs textarea {
+    width: 100%;
+    border: solid 1px blue;
+    padding: 10px;
+    border-radius: 5px;
+    resize: none;
+    outline: none;
+    font-size: 18px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.5) transparent;
+}
+
+.post-inputs textarea::-webkit-scrollbar {
+    width: 2px;
+    height: 5px;
+}
+
+.post-inputs textarea::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.post-inputs textarea::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+}
+
+
+
+.post-inputs .addOns {
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem
+}
+
+.addOns div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    font-size: 28px;
+}
+
+.addOns p {
+    font-size: 22px;
+}
+
+.addOns div svg {
+    cursor: pointer;
+}
+
+
+.addOns div svg:nth-child(1) {
+    color: #00A400;
+}
+
+.addOns div svg:nth-child(2) {
+    color: blue;
+}
+
+.img-box {
+    max-width: 100%;
+    max-height: 400px;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.5) transparent;
+}
+
+.img-box::-webkit-scrollbar {
+    width: 2px;
+}
+
+.img-box::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.img-box::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+}
+
+.img-box img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
