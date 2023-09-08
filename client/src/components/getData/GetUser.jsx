@@ -9,7 +9,7 @@ export const getUser = async () => {
                 "Access-Control-Allow-Credentials": true,
             },
         });
-        if (response.status === 200) {
+        if (response.ok) {
             const resObject = await response.json();
 
             if (resObject) {

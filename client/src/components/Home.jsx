@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { getUser } from './getData/GetUser'
-import { logout } from './fetch/Logout'
+import { getUser } from './getData/GetUser';
+import { logout } from './fetch/Logout';
 import Post from './Post';
 import LogoutPop from './LogoutPop';
+import PostsDisplay from './PostsDisplay';
 
 function Home() {
-
-  const [user, setUser] = useState(null)
-  const [email, setEmail] = useState(null)
-  const [id, setId] = useState(null)
-  const [status, setStatus] = useState(null)
-  const [given, setGiven] = useState(null)
+  const [user, setUser] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [id, setId] = useState(null);
+  const [status, setStatus] = useState(null);
+  const [given, setGiven] = useState(null);
   const [family, setFamily] = useState(null)
-  const [isOpen, setOpen] = useState(false)
-  const [isOpenPost, setOpenPost] = useState(false)
+  const [isOpen, setOpen] = useState(false);
+  const [isOpenPost, setOpenPost] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -24,41 +24,39 @@ function Home() {
         setId(resObject.id);
         setStatus(resObject.success);
         setGiven(resObject.given);
-        setFamily(resObject.family);
+        setFamily(resObject.family)
       } catch (error) {
         console.error(error);
       }
-    }
+    };
 
     fetchUser();
   }, []);
 
-  const combineName = `${given} ${family}`
-
   const handleLogout = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
 
   const confirmLogout = () => {
-    setOpen(false)
-    logout()
-  }
+    setOpen(false);
+    logout();
+  };
 
   const closeLogout = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   const handlePostClick = () => {
-    setOpenPost(true)
-  }
+    setOpenPost(true);
+  };
 
   const handlePostClose = () => {
-    setOpenPost(false)
-  }
+    setOpenPost(false);
+  };
 
 
   return (
-    <div className='Home'>
+    <div className="Home">
       <div className="home-nav">
         <div className="currentUser">Hello, {given ? given : 'Loading...'}</div>
         <button onClick={handleLogout}>Logout</button>
@@ -69,8 +67,11 @@ function Home() {
 
       <div className="home-canvas">
         <LogoutPop isOpen={isOpen} confirmLogout={confirmLogout} closeLogout={closeLogout} />
+        <Post isOpenPost={isOpenPost} handlePostClose={handlePostClose} given={given} family={family} id={id} />
+      </div>
 
-        <Post isOpenPost={isOpenPost} handlePostClose={handlePostClose} name={combineName} />
+      <div className="posts">
+        <PostsDisplay />
       </div>
     </div>
   );

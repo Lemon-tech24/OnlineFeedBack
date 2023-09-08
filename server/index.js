@@ -2,6 +2,7 @@ require('dotenv').config()
 const cookieSession = require('cookie-session')
 const express = require('express')
 const passport = require('passport')
+const helmet = require('helmet');
 const authRoute = require('./routes/auth')
 const dbRoute = require('./routes/database')
 const cors = require('cors')
@@ -14,7 +15,9 @@ app.use(cors({
     credentials: true,
 }))
 
-app.use(cookieSession({ name: "session", keys: ["key"], maxAge: 24 * 60 * 60 * 100 }));
+app.use(helmet())
+app.use(express.json())
+app.use(cookieSession({ name: "session", keys: ["cat dog moew asda"], maxAge: 24 * 60 * 60 * 100 }));
 
 app.use(passport.initialize())
 app.use(passport.session())
