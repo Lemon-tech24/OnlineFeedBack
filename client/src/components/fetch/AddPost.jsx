@@ -13,7 +13,7 @@ export const AddPost = async (data) => {
 
         if (response.ok) {
             const responseData = await response.json();
-            return responseData;
+            return responseData
         } else {
             throw new Error('Failed to add post.');
         }

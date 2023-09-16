@@ -68,11 +68,11 @@ function Home() {
       <div className="home-canvas">
         <LogoutPop isOpen={isOpen} confirmLogout={confirmLogout} closeLogout={closeLogout} />
         <Post isOpenPost={isOpenPost} handlePostClose={handlePostClose} given={given} family={family} id={id} />
-      </div>
-
-      <div className="posts">
         <PostsDisplay />
       </div>
+
+
+
     </div>
   );
 }
